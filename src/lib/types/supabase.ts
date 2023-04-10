@@ -3,27 +3,53 @@ export type Json = string | number | boolean | null | { [key: string]: Json } | 
 export interface Database {
 	public: {
 		Tables: {
-			profiles: {
+			posts: {
 				Row: {
-					created_at: string;
-					description: string;
+					author_id: string;
+					created_at: string | null;
+					file_id: string;
 					id: string;
 					name: string;
-					updated_at: string;
+					thumbnail_id: string;
 				};
 				Insert: {
-					created_at?: string;
-					description?: string;
-					id: string;
+					author_id: string;
+					created_at?: string | null;
+					file_id: string;
+					id?: string;
 					name: string;
-					updated_at?: string;
+					thumbnail_id: string;
 				};
 				Update: {
-					created_at?: string;
-					description?: string;
+					author_id?: string;
+					created_at?: string | null;
+					file_id?: string;
 					id?: string;
 					name?: string;
-					updated_at?: string;
+					thumbnail_id?: string;
+				};
+			};
+			profiles: {
+				Row: {
+					created_at: string | null;
+					description: string | null;
+					id: string;
+					modified_at: string | null;
+					name: string | null;
+				};
+				Insert: {
+					created_at?: string | null;
+					description?: string | null;
+					id: string;
+					modified_at?: string | null;
+					name?: string | null;
+				};
+				Update: {
+					created_at?: string | null;
+					description?: string | null;
+					id?: string;
+					modified_at?: string | null;
+					name?: string | null;
 				};
 			};
 		};
