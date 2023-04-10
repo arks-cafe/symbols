@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { Auth } from '@supabase/auth-ui-svelte';
 	import { ThemeSupa } from '@supabase/auth-ui-shared';
+	import { dev } from '$app/environment';
 	import type { PageData } from './$types';
 	export let data: PageData;
+
+	console.log(dev);
 
 	async function signOut() {
 		await data.supabase.auth.signOut();
@@ -20,6 +23,7 @@
 				supabaseClient={data.supabase}
 				appearance={{ theme: ThemeSupa }}
 				providers={['discord']}
+				redirectTo={dev ? 'http://localhost:5173' : undefined}
 			/>
 		</div>
 	{:else}
