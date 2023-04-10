@@ -48,6 +48,8 @@
 		"@supabase/auth-helpers-sveltekit": "^0.9.3",
 		"@supabase/auth-ui-svelte": "^0.1.5",
 		"@supabase/supabase-js": "^2.15.0",
-		"postgres": "^3.3.4"
+		"pixi.js": "^7.2.4",
+		"postgres": "^3.3.4",
+		"symbol-art-parser": "^0.1.0"
 	}
 }
