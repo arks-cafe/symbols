@@ -8,6 +8,7 @@
 	<h1 class="font-black text-4xl">Home</h1>
 	<a class="btn" href="/auth">Account</a>
 	<a class="btn" href="/preview">Preview</a>
+	<a class="btn" href="/upload">Upload</a>
 	<h3>
 		{#if data.session}
 			Welcome, {data.session.user.id}

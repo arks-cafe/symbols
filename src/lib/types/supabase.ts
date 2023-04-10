@@ -7,26 +7,29 @@ export interface Database {
 				Row: {
 					author_id: string;
 					created_at: string | null;
-					file_id: string;
-					id: string;
+					file_path: string;
+					id: number;
+					json_raw: Json;
 					name: string;
-					thumbnail_id: string;
+					thumbnail_path: string;
 				};
 				Insert: {
 					author_id: string;
 					created_at?: string | null;
-					file_id: string;
-					id?: string;
+					file_path: string;
+					id?: number;
+					json_raw: Json;
 					name: string;
-					thumbnail_id: string;
+					thumbnail_path: string;
 				};
 				Update: {
 					author_id?: string;
 					created_at?: string | null;
-					file_id?: string;
-					id?: string;
+					file_path?: string;
+					id?: number;
+					json_raw?: Json;
 					name?: string;
-					thumbnail_id?: string;
+					thumbnail_path?: string;
 				};
 			};
 			profiles: {
