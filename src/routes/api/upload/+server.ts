@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import type { Json } from '$lib/types/supabase';
 
 export const POST: RequestHandler = async ({ request, locals: { getSession } }) => {
+	console.log('hello');
 	// Require authentication.
 	const session = await getSession();
 	if (!session?.access_token) {

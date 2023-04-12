@@ -8,3 +8,5 @@ export const uploadSchema = z.object({
 	),
 	image: z.custom<File>((image: any) => image instanceof File && image.type === 'image/png')
 });
+
+export type UploadType = z.infer<typeof uploadSchema>;
