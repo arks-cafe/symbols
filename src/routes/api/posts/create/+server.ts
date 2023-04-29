@@ -1,6 +1,6 @@
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
-import { uploadSchema } from './schema';
+import { postsCreateSchema } from './schema';
 import { ZodError } from 'zod';
 import SymbolArt from 'symbol-art-parser';
 import supabaseServiceRoleClient from '$lib/clients/supabase.server';
@@ -18,7 +18,7 @@ export const POST: RequestHandler = async ({ request, locals: { getSession } }) 
 	try {
 		// Parse the form data.
 		const form = await request.formData();
-		const { name, file, image } = uploadSchema.parse(Object.fromEntries(form.entries()));
+		const { name, file, image } = postsCreateSchema.parse(Object.fromEntries(form.entries()));
 
 		// Parse the file as a Symbol Art file. Throw an error if it's not.
 		const sar = new SymbolArt();

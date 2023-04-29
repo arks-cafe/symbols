@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { uploadSchema, type UploadType } from '$routes/api/posts/create/schema';
+	import { postsCreateSchema, type PostsCreateType } from '$routes/api/posts/create/schema';
 	import SymbolArt from 'symbol-art-parser';
 	import renderSar from '$lib/utils/renderSar';
 
@@ -54,7 +54,7 @@
 		const newFile = new File([file], `${name}.sar`, { type: 'application/octet-stream' });
 
 		// Validate all inputs.
-		uploadSchema.parse({ name, file: newFile, image });
+		postsCreateSchema.parse({ name, file: newFile, image });
 
 		// Create form data.
 		const formData = new FormData();

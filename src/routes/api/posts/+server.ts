@@ -2,7 +2,7 @@ import type { RequestHandler } from './$types';
 import supabaseServiceRoleClient from '$lib/clients/supabase.server';
 import { json } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async () => {
+export const GET: RequestHandler = async ({ request }) => {
 	try {
 		const { data, error } = await supabaseServiceRoleClient
 			.from('posts')
