@@ -34,12 +34,6 @@
 			</p>
 		</div>
 	{:else}
-		<Auth
-			supabaseClient={data.supabase}
-			appearance={{ theme: ThemeSupa }}
-			providers={['discord']}
-			redirectTo={dev ? 'http://localhost:5173' : undefined}
-		/>
 		<div class="rounded-xl px-8 py-6 drop-shadow-sm max-w-sm mx-auto border">
 			<h2 class="text-xl font-bold mb-2">You're already logged in!</h2>
 			<button on:click={signOut} class="btn btn-block">Sign Out</button>

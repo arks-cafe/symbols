@@ -1,7 +1,9 @@
 <script lang="ts">
+	import supabaseClient from '$lib/clients/supabase';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
+	console.log(data);
 </script>
 
 <main class="max-w-3xl mx-auto my-8">
@@ -9,11 +11,25 @@
 	<a class="btn" href="/auth">Account</a>
 	<a class="btn" href="/preview">Preview</a>
 	<a class="btn" href="/upload">Upload</a>
-	<h3>
+	<h3 class="mb-8">
 		{#if data.session}
 			Welcome, {data.session.user.id}
 		{:else}
 			Welcome, guest
 		{/if}
 	</h3>
+
+	<ul class="flex flex-col gap-4">
+		{#each data.posts as post}
+			<li>
+				<h3 class="text-xl">{post.name}</h3>
+				<img
+					class="max-w-sm"
+					src={supabaseClient.storage.from('posts').getPublicUrl(post.thumbnail_path).data
+						.publicUrl}
+					alt={post.name}
+				/>
+			</li>
+		{/each}
+	</ul>
 </main>

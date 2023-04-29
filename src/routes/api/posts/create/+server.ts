@@ -55,7 +55,7 @@ export const POST: RequestHandler = async ({ request, locals: { getSession } }) 
 				file_path: filePath,
 				thumbnail_path: thumbnailPath,
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				json_raw: sar.json as any satisfies Json
+				json_raw: { ...sar.json, layers: sar.json.layers.length } as any satisfies Json
 			})
 			.select();
 
