@@ -4,6 +4,7 @@
  */
 
 import * as dotenv from 'dotenv';
+import fs from 'node:fs';
 dotenv.config();
 
 import { execSync } from 'node:child_process';
@@ -19,7 +20,13 @@ try {
 	execSync(
 		`supabase gen types typescript --project-id ${process.env.PUBLIC_SUPABASE_PROJECT_ID} --schema public | pnpm prettier --stdin-filepath .ts > src/lib/types/supabase.ts`
 	);
-	console.log(chalk.green('Types can be found in src/lib/types/supabase.ts'));
+	const x = fs.readFileSync('src/lib/types/supabase.ts', 'utf-8');
+	if (x.includes('export type')) {
+		console.log(chalk.green('Types generated successfully!'));
+		console.log(chalk.green('Types can be found in src/lib/types/supabase.ts'));
+	} else {
+		throw new Error();
+	}
 } catch (error) {
 	console.error(chalk.red('Something went wrong when generating types...'));
 	process.exit(1);
