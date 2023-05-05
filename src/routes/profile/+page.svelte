@@ -24,10 +24,13 @@
 				appearance={{ theme: ThemeSupa }}
 				providers={['discord']}
 				redirectTo={dev ? 'http://localhost:5173' : undefined}
-				onlyThirdPartyProviders={true}
 			/>
 			<p class="text-center text-sm">
-				<i>Your account is tied to the email used in your Discord account.</i>
+				<b>Your account is tied to your email.</b>
+				<br />
+				<i
+					>If you sign in with Discord, it will use the email associated with your Discord account.</i
+				>
 			</p>
 		</div>
 	{:else}
