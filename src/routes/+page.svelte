@@ -16,17 +16,4 @@
 			Welcome, guest
 		{/if}
 	</h3>
-
-	<ul class="flex flex-col gap-4">
-		{#each data.posts as post}
-			<li>
-				<h3 class="text-xl">{post.name}</h3>
-				<img
-					class="max-w-sm"
-					src={data.supabase.storage.from('posts').getPublicUrl(post.thumbnail_path).data.publicUrl}
-					alt={post.name}
-				/>
-			</li>
-		{/each}
-	</ul>
 </main>

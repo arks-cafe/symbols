@@ -38,7 +38,11 @@
 	$: readyToSubmit = !!file && !!name && !!previewSrc;
 	let submitting = false;
 
+	/**
+	 * TODO: Implement this
+	 */
 	async function handleSubmit() {
+		alert('This feature is not implemented yet!');
 		// Ensure all fields are filled.
 		if (!file || !name || !previewSrc || !readyToSubmit) return;
 
