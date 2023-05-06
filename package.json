@@ -45,10 +45,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@logto/browser": "^2.0.0",
-		"@logto/client": "^2.0.0",
-		"@logto/js": "^2.0.1",
-		"@logto/node": "^2.0.0",
+		"@cntr/sveltekit": "^0.0.1",
 		"@prisma/client": "4.13.0",
 		"pixi.js": "^7.2.4",
 		"postgres": "^3.3.4",

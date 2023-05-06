@@ -9,5 +9,11 @@
 	<a class="btn" href="/auth">Account</a>
 	<a class="btn" href="/preview">Preview</a>
 	<a class="btn" href="/upload">Upload</a>
-	<h3 class="mb-8">Welcome, guest</h3>
+	{#if data.user}
+		<h3 class="mb-8">Welcome, {data.user.name}</h3>
+		<a href="/logto/signout" class="btn">sign out</a>
+	{:else}
+		<h3 class="mb-8">Welcome, Guest</h3>
+		<a href="/logto/signin" class="btn">sign in</a>
+	{/if}
 </main>
