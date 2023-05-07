@@ -26,10 +26,7 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 	try {
 		const sar = new SymbolArt();
 		sar.data = await file.arrayBuffer();
-		jsonRaw = {
-			...sar.json,
-			layers: sar.json.layers.length
-		};
+		jsonRaw = sar.json;
 	} catch (e) {
 		throw error(400, 'Failed to parse Symbol Art.');
 	}
@@ -47,7 +44,10 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 				title,
 				fileUrl,
 				thumbnailUrl,
-				jsonRaw,
+				rawTitle: jsonRaw.name,
+				rawAuthorId: jsonRaw.authorId,
+				rawLayerCount: jsonRaw.layers.length,
+				rawSoundId: jsonRaw.sound,
 				authorId
 			}
 		})

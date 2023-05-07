@@ -3,24 +3,24 @@
 	import { postsCreateSchema, type PostsCreateType } from '$routes/api/posts/create/schema';
 	import SymbolArt from 'symbol-art-parser';
 	import renderSar from '$lib/utils/renderSar';
+	import parseSar from '$lib/utils/parseSar';
 
 	export let data: PageData;
 
 	let files: FileList | undefined;
 	let file: File | undefined;
-	$: file = files ? files[0] : undefined;
 	let title: string = '';
 	let loading = false;
 	let previewSrc: string | undefined;
 
-	$: if (typeof file !== 'undefined' && file instanceof File) {
+	$: if (files && typeof files[0] !== 'undefined' && files[0] instanceof File) {
 		(async () => {
 			try {
 				loading = true;
-				const sar = new SymbolArt();
-				sar.data = await file.arrayBuffer();
-				const x = await renderSar(sar.json, '/render/');
+				const sar = await parseSar(files[0]);
+				const x = await renderSar(sar, '/render/');
 				previewSrc = x;
+				file = files[0];
 			} catch (error) {
 				if (error instanceof Error) {
 					alert(error.message);
@@ -91,33 +91,29 @@
 </script>
 
 <main class="mx-auto my-8 max-w-3xl">
-	<h1 class="text-4xl font-black">Upload</h1>
-	<a class="btn" href="/">Home</a>
-	<h3>
-		{#if data.user}
-			Welcome, {data.user.sub}
-		{:else}
-			Welcome, guest
-		{/if}
-	</h3>
+	<div class="mb-8">
+		<h1 class="text-4xl font-black">Upload</h1>
+		<a class="btn" href="/">Home</a>
+	</div>
 	<form
 		on:submit|preventDefault={handleSubmit}
-		class="mx-auto rounded-xl border px-8 py-6 drop-shadow-sm flex flex-col gap-4"
+		class="mx-auto rounded-xl bg-base-100 border p-8 shadow-lg flex flex-col gap-4"
 	>
 		<div>
-			<input
-				type="file"
-				bind:files
-				class="file-input input-bordered w-full"
-				accept=".sar"
-				disabled={submitting}
-				required
-			/>
+			<label class="btn w-full">
+				Select File
+				<input type="file" bind:files class="hidden" accept=".sar" disabled={submitting} required />
+			</label>
+			{#if file}
+				<h3 class="text-center font-thing text-sm">{file.name}</h3>
+			{/if}
 		</div>
 
-		{#if previewSrc}
-			<h2 class="text-center font-bold text-lg">Preview</h2>
-			<img src={previewSrc} alt="preview" class="max-w-sm mx-auto" />
+		{#if previewSrc && file}
+			<div>
+				<h2 class="text-center font-bold text-lg">Preview</h2>
+			</div>
+			<img src={previewSrc} alt="preview" class="w-full rounded-lg mx-auto" />
 		{:else if loading}
 			<p class="text-center">Loading...</p>
 		{/if}

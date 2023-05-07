@@ -1,17 +1,13 @@
 <script lang="ts">
+	import type { PostWithAuthor } from '$lib/types';
+	export let post: PostWithAuthor;
+
 	// TODO: figure out how i want to format this
 	export let isOwnedByCurrentUser: boolean = false;
-	export let title: string = 'Title';
-	export let src: string = '';
-	export let postUrl: string = '';
-	export let userUrl: string = '';
-	export let authorName: string = 'author';
-	// export let authorId: number = '';
-	export let ingameName: string = 'Ingame Name';
-	export let ingameSoundId: number = 1;
-	export let createdAt: string = '2/2/2022';
+	const postUrl: string = `/posts/${post.id}`;
+	const userUrl: string = `/users/${post.authorId}`;
 
-	const formattedDate = new Date(createdAt).toLocaleDateString();
+	const formattedDate = new Date(post.createdAt).toLocaleDateString();
 	const soundName: string = 'TODO';
 
 	function download() {
@@ -22,26 +18,28 @@
 	function playSound() {
 		// TODO: play sound
 		alert('TODO: play sound');
-		console.log(ingameSoundId);
+		console.log(post.rawSoundId);
 	}
 
 	function deletePost() {}
 </script>
 
 <li class="shadow-lg rounded-box p-3 flex flex-col justify-between">
-	<a href={postUrl}><img class="aspect-[2/1] rounded-box w-full" {src} alt={title} /></a>
+	<a href={postUrl}
+		><img class="aspect-[2/1] rounded-box w-full" src={post.thumbnailUrl} alt={post.title} /></a
+	>
 	<div class="flex-1">
 		<a href={postUrl}>
 			<h3 class="font-semibold text-lg link-hover break-words max-w-full">
-				{title}
+				{post.title}
 			</h3>
 		</a>
 		<a href={userUrl}>
-			<h4 class="italic link-hover">@{authorName}</h4>
+			<h4 class="italic link-hover">@{post.author.name}</h4>
 		</a>
 		<div class="flex gap-2 py-2">
 			<div class="badge badge-ghost badge-sm">
-				<i class="fa-solid fa-file pr-1 text-xs" />{ingameName}
+				<i class="fa-solid fa-file pr-1 text-xs" />{post.rawTitle}
 			</div>
 			<button
 				on:click={() => {

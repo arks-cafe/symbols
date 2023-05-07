@@ -22,14 +22,17 @@ model Profile {
 }
 
 model Post {
-  id           String   @id @unique
-  cursor       Int      @unique @default(autoincrement())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  title        String
-  fileUrl      String
-  thumbnailUrl String
-  jsonRaw      Json
-  author       Profile  @relation(fields: [authorId], references: [userId])
-  authorId     String
+  id            String   @id @unique
+  cursor        Int      @unique @default(autoincrement())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  title         String
+  fileUrl       String
+  thumbnailUrl  String
+  rawLayerCount Int
+  rawTitle      String
+  rawSoundId    Int
+  rawAuthorId   Int
+  author        Profile  @relation(fields: [authorId], references: [userId])
+  authorId      String
 }
