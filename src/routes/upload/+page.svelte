@@ -1,11 +1,8 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { postsCreateSchema, type PostsCreateType } from '$routes/api/posts/create/schema';
-	import SymbolArt from 'symbol-art-parser';
+	import { postsCreateSchema } from '$routes/api/posts/create/schema';
 	import renderSar from '$lib/utils/renderSar';
 	import parseSar from '$lib/utils/parseSar';
-
-	export let data: PageData;
 
 	let files: FileList | undefined;
 	let file: File | undefined;
