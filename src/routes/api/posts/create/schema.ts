@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 export const postsCreateSchema = z.object({
-	name: z.string().trim().max(60),
+	title: z.string().trim().max(60),
 	file: z.custom<File>(
 		(file: any) => file instanceof File && file.type === 'application/octet-stream'
 	),

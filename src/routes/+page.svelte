@@ -18,3 +18,12 @@
 		<a href="/logto/signin" class="btn">sign in</a>
 	{/if}
 </main>
+
+<button
+	on:click={() => {
+		fetch('/api/ping')
+			.then((x) => x.json())
+			.then(console.log);
+	}}
+	class="btn">ping</button
+>

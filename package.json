@@ -59,8 +59,10 @@
   },
   "type": "module",
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.328.0",
     "@cntr/sveltekit": "^0.0.1",
     "@prisma/client": "4.13.0",
+    "nanoid": "^4.0.2",
     "pixi.js": "^7.2.4",
     "postgres": "^3.3.4",
     "symbol-art-parser": "^0.1.0",

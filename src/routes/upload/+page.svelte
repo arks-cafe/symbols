@@ -9,7 +9,7 @@
 	let files: FileList | undefined;
 	let file: File | undefined;
 	$: file = files ? files[0] : undefined;
-	let name: string = '';
+	let title: string = '';
 	let loading = false;
 	let previewSrc: string | undefined;
 
@@ -35,50 +35,58 @@
 	}
 
 	let readyToSubmit = false;
-	$: readyToSubmit = !!file && !!name && !!previewSrc;
+	$: readyToSubmit = !!file && !!title && !!previewSrc;
 	let submitting = false;
 
-	/**
-	 * TODO: Implement this
-	 */
 	async function handleSubmit() {
-		alert('This feature is not implemented yet!');
-		// Ensure all fields are filled.
-		if (!file || !name || !previewSrc || !readyToSubmit) return;
+		try {
+			// Ensure all fields are filled.
+			if (!file || !title || !previewSrc || !readyToSubmit)
+				throw new Error('Please fill all fields...');
 
-		if (submitting) return;
+			if (submitting) throw new Error('Already submitting...');
 
-		submitting = true;
+			submitting = true;
 
-		// Convert preview image DataURL to file.
-		let image = await fetch(previewSrc)
-			.then((res) => res.blob())
-			.then((blob) => new File([blob], 'image.png', { type: 'image/png' }));
+			// Convert preview image DataURL to file.
+			let image = await fetch(previewSrc)
+				.then((res) => res.blob())
+				.then((blob) => new File([blob], 'image.png', { type: 'image/png' }));
 
-		const newFile = new File([file], `${name}.sar`, { type: 'application/octet-stream' });
+			const newFile = new File([file], `${title}.sar`, { type: 'application/octet-stream' });
 
-		// Validate all inputs.
-		postsCreateSchema.parse({ name, file: newFile, image });
+			// Validate all inputs.
+			postsCreateSchema.parse({ title, file: newFile, image });
 
-		// Create form data.
-		const formData = new FormData();
-		formData.append('name', name);
-		formData.append('file', file);
-		formData.append('image', image);
+			// Create form data.
+			const formData = new FormData();
+			formData.append('title', title);
+			formData.append('file', file);
+			formData.append('image', image);
 
-		const res = await fetch('/api/posts/create', {
-			method: 'POST',
-			body: formData
-		});
+			const res = await fetch('/api/posts/create', {
+				method: 'POST',
+				body: formData
+			});
 
-		const json = await res.json();
-		console.log(json);
-		if (json.message === 'success') {
-			alert('Successfully uploaded!');
-		} else {
-			alert(json.message ?? 'Something went wrong...');
+			const json = await res.json();
+			console.log(json);
+			if (json.message === 'success') {
+				alert('Successfully uploaded!');
+			} else {
+				throw new Error(json.message ?? 'Something went wrong...');
+			}
+			submitting = false;
+		} catch (err) {
+			console.error(err);
+			if (err instanceof Error) {
+				alert(err.message);
+			} else {
+				alert('Something went wrong...');
+			}
+		} finally {
+			submitting = false;
 		}
-		submitting = false;
 	}
 </script>
 
@@ -86,8 +94,8 @@
 	<h1 class="text-4xl font-black">Upload</h1>
 	<a class="btn" href="/">Home</a>
 	<h3>
-		{#if data.session}
-			Welcome, {data.session.user.id}
+		{#if data.user}
+			Welcome, {data.user.sub}
 		{:else}
 			Welcome, guest
 		{/if}
@@ -120,7 +128,7 @@
 					<span class="label-text">Post Title</span>
 					<input
 						type="text"
-						bind:value={name}
+						bind:value={title}
 						class="input-bordered input w-full"
 						required
 						disabled={submitting}

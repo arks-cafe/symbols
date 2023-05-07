@@ -22,13 +22,13 @@ model Profile {
 }
 
 model Post {
-  id            String   @id @default(uuid())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
-  title         String
-  filePath      String
-  thumbnailPath String
-  jsonRaw       Json
-  author        Profile  @relation(fields: [authorId], references: [userId])
-  authorId      String
+  id           String   @id @unique
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  title        String
+  fileUrl      String
+  thumbnailUrl String
+  jsonRaw      Json
+  author       Profile  @relation(fields: [authorId], references: [userId])
+  authorId     String
 }

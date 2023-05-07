@@ -7,6 +7,7 @@ declare global {
 		interface Locals {
 			logto: LogtoClient;
 			user: import('@cntr/sveltekit').UserInfoResponse | null;
+			profile: import('.prisma/client').Profile | null;
 		}
 		// interface PageData {}
 		// interface Platform {}
