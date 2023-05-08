@@ -7,23 +7,35 @@ import { postsCreateSchema } from './schema';
 import { uploadFile } from '$lib/clients/s3.server';
 import SymbolArt from 'symbol-art-parser';
 import { nanoid } from 'nanoid';
+import type { Post } from '@prisma/client';
 
 export type GetPostsResult = PostWithAuthor[];
 // Handle reading of posts.
 export const GET: RequestHandler = async ({ url }) => {
 	const untilCursor = Number(url.searchParams.get('untilCursor')) || undefined;
+	const authorId = url.searchParams.get('userId') || undefined;
+
+	if (authorId) {
+		// check if user exists.
+		const profile = await prisma.profile.findUnique({ where: { userId: authorId } });
+		if (!profile) {
+			throw error(404, 'User not found.');
+		}
+	}
 
 	const posts = await prisma.post.findMany({
 		skip: untilCursor ? 1 : 0,
 		take: getPostsCount,
 		cursor: untilCursor ? { cursor: untilCursor } : undefined,
 		include: { author: true },
-		orderBy: { createdAt: 'desc' }
+		orderBy: { createdAt: 'desc' },
+		where: authorId ? { authorId } : undefined
 	});
 
 	return json(posts);
 };
 
+export type PostPostResult = { message: string; post: Post };
 // Handle creation of posts.
 export const POST: RequestHandler = async ({ request, locals }) => {
 	if (!(await locals.logto.isAuthenticated()) || !locals.user?.sub) {
@@ -79,5 +91,5 @@ export const POST: RequestHandler = async ({ request, locals }) => {
 			throw error(500, 'Failed to create post.');
 		});
 
-	return json({ message: 'Post Created', post });
+	return json({ message: 'Post Created', post } as PostPostResult);
 };

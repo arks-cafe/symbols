@@ -5,6 +5,8 @@
 	import { postsCreateSchema } from '$routes/api/posts/schema';
 	import renderSar from '$lib/utils/renderSar';
 	import parseSar from '$lib/utils/parseSar';
+	import type { PostPostResult } from '$routes/api/posts/+server';
+	import { goto } from '$app/navigation';
 
 	let files: FileList | undefined;
 	let file: File | undefined;
@@ -68,10 +70,10 @@
 				body: formData
 			});
 
-			const json = await res.json();
+			const json: PostPostResult = await res.json();
 			console.log(json);
 			if (res.status === 200) {
-				alert('Successfully uploaded!');
+				goto('/posts/' + json.post.id);
 			} else {
 				throw new Error(json.message ?? 'Something went wrong...');
 			}
@@ -89,7 +91,7 @@
 	}
 </script>
 
-<main class="mx-auto py-8 max-w-5xl">
+<main class="mx-auto max-w-5xl">
 	<div class="mb-8">
 		<h1 class="text-4xl font-black">Upload</h1>
 		<div class="flex justify-between">

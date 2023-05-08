@@ -5,7 +5,7 @@
 	import SymbolArtDisplay from '$lib/components/gallery/SymbolArtDisplay.svelte';
 
 	// Set initial posts from page load.
-	let posts = data.catalog;
+	let posts = data.posts;
 	let loading = false;
 
 	async function showMore() {
@@ -29,7 +29,7 @@
 	}
 </script>
 
-<main class="max-w-5xl mx-auto py-8">
+<div class="max-w-5xl mx-auto mb-8">
 	<h1 class="font-black text-4xl">Home</h1>
 	<div class="flex justify-between">
 		<div class="flex gap-2">
@@ -49,7 +49,7 @@
 	{:else}
 		<h3>Welcome, Guest</h3>
 	{/if}
-</main>
+</div>
 
 <div class="mx-auto max-w-5xl mb-16">
 	<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">

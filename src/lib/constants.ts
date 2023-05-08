@@ -1,1 +1,1 @@
-export const getPostsCount = 2;
+export const getPostsCount = 20;
