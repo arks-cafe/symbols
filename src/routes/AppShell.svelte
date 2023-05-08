@@ -1,9 +1,15 @@
-<header
-	class="max-w-5xl mx-auto px-8 py-4 z-40 rounded-box bg-primary text-primary-content bg-opacity-90 sticky top-2"
->
-	<h1 class="text-4xl font-black">Symbol Bucket</h1>
-</header>
+<div class="bg-base-300">
+	<main class="container mx-auto max-w-6xl shadow-lg min-h-screen bg-base-100">
+		<header class="px-8 sticky top-4 z-40">
+			<div class="max-w-5xl mx-auto p-2 rounded-xl bg-primary text-primary-content bg-opacity-90">
+				<a href="/" class="btn btn-ghost normal-case font-black text-4xl overflow-x-clip">
+					<h1 class="">Symbol Bucket</h1>
+				</a>
+			</div>
+		</header>
 
-<main>
-	<slot />
-</main>
+		<div class="px-8">
+			<slot />
+		</div>
+	</main>
+</div>

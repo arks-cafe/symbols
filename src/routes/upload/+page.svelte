@@ -89,7 +89,7 @@
 	}
 </script>
 
-<main class="mx-auto p-8 max-w-6xl">
+<main class="mx-auto py-8 max-w-5xl">
 	<div class="mb-8">
 		<h1 class="text-4xl font-black">Upload</h1>
 		<div class="flex justify-between">

@@ -3,24 +3,25 @@
 	export let data: PageData;
 
 	import SymbolArtDisplay from '$lib/components/gallery/SymbolArtDisplay.svelte';
-	import { getPostsCount } from '$lib/constants';
 
 	// Set initial posts from page load.
 	let posts = data.catalog;
-	let isFinalPost = false;
-	$: if (data.catalog.length < getPostsCount) {
-		isFinalPost = true;
-	}
+	let loading = false;
 
 	async function showMore() {
-		const res = await fetch(`/api/posts?untilCursor=${posts.at(-1)?.cursor}`);
-		const json = await res.json();
-		console.log(json);
-		if (json.length < getPostsCount) {
-			// alert('No more posts!');
-			isFinalPost = true;
+		try {
+			loading = true;
+			const res = await fetch(`/api/posts?untilCursor=${posts.at(-1)?.cursor}`);
+			const json = await res.json();
+			console.log(json);
+			if (!json.length) {
+				alert('No more posts!');
+				return;
+			}
+			posts = [...posts, ...json];
+		} finally {
+			loading = false;
 		}
-		posts = [...posts, ...json];
 	}
 
 	function handleDelete(e: CustomEvent<{ id: string }>) {
@@ -28,7 +29,7 @@
 	}
 </script>
 
-<main class="max-w-6xl mx-auto p-8">
+<main class="max-w-5xl mx-auto py-8">
 	<h1 class="font-black text-4xl">Home</h1>
 	<div class="flex justify-between">
 		<div class="flex gap-2">
@@ -50,11 +51,11 @@
 	{/if}
 </main>
 
-<div class="mx-auto px-8 max-w-6xl mb-16">
+<div class="mx-auto max-w-5xl mb-16">
 	<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
 		{#each posts as post}
 			<SymbolArtDisplay on:delete={handleDelete} {post} />
 		{/each}
 	</div>
-	<button on:click={showMore} disabled={isFinalPost} class="btn btn-block btn-sm">Show More</button>
+	<button on:click={showMore} disabled={loading} class="btn btn-block btn-sm">Load More</button>
 </div>

@@ -9,12 +9,12 @@ export const GET: RequestHandler = async ({ params }) => {
 		throw error(400, 'Missing post id.');
 	}
 
-	const post = await prisma.post.findUnique({ where: { id } });
+	const post = await prisma.post.findUnique({ where: { id }, include: { author: true } });
 	if (!post) {
 		throw error(404, 'Post not found.');
 	}
 
-	return json({ post });
+	return json(post);
 };
 
 // Handle deletion of posts.
