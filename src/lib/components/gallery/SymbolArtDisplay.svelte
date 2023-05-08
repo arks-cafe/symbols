@@ -2,13 +2,15 @@
 	import type { PostWithAuthor } from '$lib/types';
 	export let post: PostWithAuthor;
 
-	// TODO: figure out how i want to format this
-	export let isOwnedByCurrentUser: boolean = false;
 	const postUrl: string = `/posts/${post.id}`;
 	const userUrl: string = `/users/${post.authorId}`;
 
 	const formattedDate = new Date(post.createdAt).toLocaleDateString();
 	const soundName: string = 'TODO';
+
+	import { page } from '$app/stores';
+	let isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
+	$: isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
 
 	function download() {
 		//TODO: download

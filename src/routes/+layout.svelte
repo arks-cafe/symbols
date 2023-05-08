@@ -1,6 +1,10 @@
 <script lang="ts">
 	/** Import Tailwind CSS */
 	import '../app.css';
+
+	import AppShell from './AppShell.svelte';
 </script>
 
-<slot />
+<AppShell>
+	<slot />
+</AppShell>
