@@ -2,20 +2,16 @@
 	import type { PostWithAuthor } from '$lib/types';
 	export let post: PostWithAuthor;
 
+	// Check if the current user (from PageData) owns the post
+	import { page } from '$app/stores';
+	let isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
+	$: isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
+
 	const postUrl: string = `/posts/${post.id}`;
 	const userUrl: string = `/users/${post.authorId}`;
 
 	const formattedDate = new Date(post.createdAt).toLocaleDateString();
 	const soundName: string = 'TODO';
-
-	import { page } from '$app/stores';
-	let isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
-	$: isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
-
-	function download() {
-		//TODO: download
-		alert('TODO: download');
-	}
 
 	function playSound() {
 		// TODO: play sound
@@ -23,7 +19,18 @@
 		console.log(post.rawSoundId);
 	}
 
-	function deletePost() {}
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+
+	async function deletePost() {
+		const res = await fetch('/api/posts/' + post.id, { method: 'DELETE' });
+		if (res.ok) {
+			alert('Post deleted!');
+			dispatch('delete', { id: post.id });
+		} else {
+			alert('Failed to delete post!');
+		}
+	}
 </script>
 
 <li class="shadow-lg rounded-box p-3 flex flex-col justify-between">
@@ -59,7 +66,8 @@
 		<h4 class="text-sm italic">posted on {formattedDate}</h4>
 	</div>
 	<div class="pt-2 flex gap-2">
-		<button on:click={download} class="btn btn-secondary btn-sm flex-1">Download</button>
+		<a href={post.fileUrl} aria-label="download" class="btn btn-secondary btn-sm flex-1">Download</a
+		>
 		{#if isOwnedByCurrentUser}
 			<button on:click={() => deletePost()} class="btn btn-error btn-sm hover:brightness-95"
 				>Delete</button

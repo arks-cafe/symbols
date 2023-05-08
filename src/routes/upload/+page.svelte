@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	export let data: PageData;
 
-	import { postsCreateSchema } from '$routes/api/posts/create/schema';
+	import { postsCreateSchema } from '$routes/api/posts/schema';
 	import renderSar from '$lib/utils/renderSar';
 	import parseSar from '$lib/utils/parseSar';
 
@@ -63,14 +63,14 @@
 			formData.append('file', file);
 			formData.append('image', image);
 
-			const res = await fetch('/api/posts/create', {
+			const res = await fetch('/api/posts', {
 				method: 'POST',
 				body: formData
 			});
 
 			const json = await res.json();
 			console.log(json);
-			if (json.message === 'success') {
+			if (res.status === 200) {
 				alert('Successfully uploaded!');
 			} else {
 				throw new Error(json.message ?? 'Something went wrong...');

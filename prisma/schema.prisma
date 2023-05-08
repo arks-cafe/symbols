@@ -28,7 +28,9 @@ model Post {
   updatedAt     DateTime @updatedAt
   title         String
   fileUrl       String
+  fileKey       String
   thumbnailUrl  String
+  thumbnailKey  String
   rawLayerCount Int
   rawTitle      String
   rawSoundId    Int
