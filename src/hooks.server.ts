@@ -33,9 +33,13 @@ const setLogtoAuthenticatedUser: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-const createProfileIfNotExists: Handle = async ({ event, resolve }) => {
+const attachProfileOrCreateIfNotExists: Handle = async ({ event, resolve }) => {
 	const { user } = event.locals;
-	if (!user) return await resolve(event);
+
+	if (!user) {
+		event.locals.profile = null;
+		return await resolve(event);
+	}
 	let profile = await prisma.profile.findFirst({ where: { userId: user.sub } });
 	if (!profile) {
 		profile = await prisma.profile.create({
@@ -56,5 +60,5 @@ export const handle = sequence(
 	]),
 	// authenticationHandler,
 	setLogtoAuthenticatedUser,
-	createProfileIfNotExists
+	attachProfileOrCreateIfNotExists
 );

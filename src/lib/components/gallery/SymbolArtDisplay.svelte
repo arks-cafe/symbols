@@ -26,7 +26,11 @@
 
 <li class="shadow-lg rounded-box p-3 flex flex-col justify-between">
 	<a href={postUrl}
-		><img class="aspect-[2/1] rounded-box w-full" src={post.thumbnailUrl} alt={post.title} /></a
+		><img
+			class="aspect-[2/1] rounded-box w-full transition-all hover:scale-[101%] hover:shadow-md"
+			src={post.thumbnailUrl}
+			alt={post.title}
+		/></a
 	>
 	<div class="flex-1">
 		<a href={postUrl}>

@@ -2,8 +2,7 @@ import prisma from '$lib/clients/db.server';
 import type { RequestHandler } from './$types';
 import { json } from '@sveltejs/kit';
 import type { PostWithAuthor } from '$lib/types';
-
-const count = 3;
+import { getPostsCount } from '$lib/constants';
 
 export type GetPostsResult = {
 	posts: PostWithAuthor[];
@@ -11,16 +10,15 @@ export type GetPostsResult = {
 };
 
 export const GET: RequestHandler = async ({ url }) => {
-	const page = url.searchParams.get('page');
-	const parsedPage = Number.parseInt(page ?? '') || 1;
+	const untilCursor = Number(url.searchParams.get('untilCursor')) || undefined;
 
 	const posts = await prisma.post.findMany({
-		skip: (parsedPage - 1) * count,
-		take: count,
+		skip: untilCursor ? 1 : 0,
+		take: getPostsCount,
+		cursor: untilCursor ? { cursor: untilCursor } : undefined,
 		include: { author: true },
 		orderBy: { createdAt: 'desc' }
 	});
-	const total = await prisma.post.count();
-	const pages = Math.ceil(total / count);
-	return json({ posts, pages } as GetPostsResult);
+
+	return json({ posts } as GetPostsResult);
 };

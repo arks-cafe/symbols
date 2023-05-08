@@ -8,7 +8,7 @@ import { nanoid } from 'nanoid';
 
 export const POST: RequestHandler = async ({ request, locals }) => {
 	if (!(await locals.logto.isAuthenticated()) || !locals.user?.sub) {
-		throw error(401, 'Unauthorized');
+		throw error(401, 'Unauthorized. Please sign in to continue.');
 	}
 
 	// Parse formData into object for uploading.

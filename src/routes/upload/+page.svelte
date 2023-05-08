@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
+	export let data: PageData;
+
 	import { postsCreateSchema } from '$routes/api/posts/create/schema';
 	import renderSar from '$lib/utils/renderSar';
 	import parseSar from '$lib/utils/parseSar';
@@ -87,53 +89,77 @@
 	}
 </script>
 
-<main class="mx-auto my-8 max-w-3xl">
+<main class="mx-auto p-8 max-w-6xl">
 	<div class="mb-8">
 		<h1 class="text-4xl font-black">Upload</h1>
-		<a class="btn" href="/">Home</a>
-	</div>
-	<form
-		on:submit|preventDefault={handleSubmit}
-		class="mx-auto rounded-xl bg-base-100 border p-8 shadow-lg flex flex-col gap-4"
-	>
-		<div>
-			<label class="btn w-full">
-				Select File
-				<input type="file" bind:files class="hidden" accept=".sar" disabled={submitting} required />
-			</label>
-			{#if file}
-				<h3 class="text-center font-thing text-sm">{file.name}</h3>
+		<div class="flex justify-between">
+			<a class="btn" href="/">Home</a>
+			{#if data.user}
+				<a href="/logto/signout" class="btn">sign out</a>
+			{:else}
+				<a href="/logto/signin" class="btn">sign in</a>
 			{/if}
 		</div>
-
-		{#if previewSrc && file}
-			<div>
-				<h2 class="text-center font-bold text-lg">Preview</h2>
-			</div>
-			<img src={previewSrc} alt="preview" class="w-full rounded-lg mx-auto" />
-		{:else if loading}
-			<p class="text-center">Loading...</p>
+		{#if data.profile?.name}
+			<h3>Welcome, {data.profile.name}</h3>
+		{:else}
+			<h3>Welcome, Guest</h3>
 		{/if}
+	</div>
 
-		{#if previewSrc}
-			<div class="form-control">
-				<label>
-					<span class="label-text">Post Title</span>
+	{#if data.profile?.name}
+		<form
+			on:submit|preventDefault={handleSubmit}
+			class="mx-auto rounded-xl bg-base-100 border p-8 shadow-lg flex flex-col gap-4"
+		>
+			<div>
+				<label class="btn w-full">
+					Select File
 					<input
-						type="text"
-						bind:value={title}
-						class="input-bordered input w-full"
-						required
+						type="file"
+						bind:files
+						class="hidden"
+						accept=".sar"
 						disabled={submitting}
+						required
 					/>
 				</label>
+				{#if file}
+					<h3 class="text-center font-thing text-sm">{file.name}</h3>
+				{/if}
 			</div>
 
-			<div>
-				<button type="submit" class="btn btn-block" disabled={!readyToSubmit || submitting}
-					>submit</button
-				>
-			</div>
-		{/if}
-	</form>
+			{#if previewSrc && file}
+				<div>
+					<h2 class="text-center font-bold text-lg">Preview</h2>
+				</div>
+				<img src={previewSrc} alt="preview" class="w-full rounded-lg mx-auto" />
+			{:else if loading}
+				<p class="text-center">Loading...</p>
+			{/if}
+
+			{#if previewSrc}
+				<div class="form-control">
+					<label>
+						<span class="label-text">Post Title</span>
+						<input
+							type="text"
+							bind:value={title}
+							class="input-bordered input w-full"
+							required
+							disabled={submitting}
+						/>
+					</label>
+				</div>
+
+				<div>
+					<button type="submit" class="btn btn-block" disabled={!readyToSubmit || submitting}
+						>submit</button
+					>
+				</div>
+			{/if}
+		</form>
+	{:else}
+		<p class="text-center">You must be signed in to upload.</p>
+	{/if}
 </main>
