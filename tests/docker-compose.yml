@@ -1,0 +1,42 @@
+# Docker Compose file for testing logto.
+name: symbols-full-stack
+
+version: '3.9'
+
+services:
+  # Web server for testing health check
+  web:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      s3:
+        condition: service_started
+    image: caddy:2
+    ports:
+      - 4174:4174
+    entrypoint: caddy respond "meow"
+
+  # Postgres
+  postgres:
+    image: postgres:15-alpine
+    user: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: p0stgr3s
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Minio for S3
+  s3:
+    image: minio/minio
+    ports:
+      - 9000:9000
+    command: server /data
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    volumes:
+      - .temp/data:/data

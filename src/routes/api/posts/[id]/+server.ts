@@ -29,8 +29,6 @@ export const DELETE: RequestHandler = async ({ params, locals }) => {
 		throw error(400, 'Missing post id.');
 	}
 
-	console.log('haiii');
-
 	const post = await prisma.post.findUnique({ where: { id } });
 	if (!post) {
 		throw error(404, 'Post not found.');

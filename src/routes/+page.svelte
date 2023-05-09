@@ -53,7 +53,7 @@
 
 <div class="mx-auto max-w-5xl mb-16">
 	<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-		{#each posts as post}
+		{#each posts as post (post.id)}
 			<SymbolArtDisplay on:delete={handleDelete} {post} />
 		{/each}
 	</div>

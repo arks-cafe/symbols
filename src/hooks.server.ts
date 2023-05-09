@@ -1,8 +1,8 @@
-// import { redirect } from '@sveltejs/kit';
-import type { Handle } from '@sveltejs/kit';
+import { redirect, type Handle } from '@sveltejs/kit';
 import { LogtoAuthHandler, UserScope } from '@cntr/sveltekit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { env } from '$env/dynamic/public';
+import { env as privateEnv } from '$env/dynamic/private';
 import prisma from '$lib/clients/db.server';
 
 // const authenticationHandler: Handle = async ({ event, resolve }) => {
@@ -21,6 +21,8 @@ import prisma from '$lib/clients/db.server';
 
 // 	return await resolve(event);
 // };
+
+console.log('load hooks');
 
 const setLogtoAuthenticatedUser: Handle = async ({ event, resolve }) => {
 	try {
@@ -53,9 +55,38 @@ const attachProfileOrCreateIfNotExists: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
-console.log('endpoint', env.PUBLIC_LOGTO_ENDPOINT);
+const MockLogtoAuthHandler: Handle = async ({ event, resolve }) => {
+	event.locals.logto = {
+		isAuthenticated: async () => true,
+		fetchUserInfo: async () =>
+			event.cookies.get('logto-mock-auth') === 'mock-code' ? { sub: 'mock-user-id' } : null,
+		signIn: async () => {
+			event.cookies.set('logto-mock-auth', 'mock-code', { path: '/' });
+			throw redirect(303, '/logto/callback?code=mock-code');
+		},
+		signOut: async () => {
+			event.cookies.delete('logto-mock-auth', { path: '/' });
+			throw redirect(303, '/');
+		}
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	} as any;
 
-export const handle = sequence(
+	return await resolve(event);
+};
+
+const handleForTest: Handle = sequence(
+	MockLogtoAuthHandler,
+	setLogtoAuthenticatedUser,
+	attachProfileOrCreateIfNotExists
+);
+
+const isTesting = privateEnv.NODE_ENV === 'test';
+
+if (isTesting) {
+	console.log('Running in test mode!');
+}
+
+const handleForOther = sequence(
 	LogtoAuthHandler(env.PUBLIC_LOGTO_APP_ID as string, env.PUBLIC_LOGTO_ENDPOINT as string, [
 		UserScope.Email,
 		UserScope.Profile
@@ -64,3 +95,5 @@ export const handle = sequence(
 	setLogtoAuthenticatedUser,
 	attachProfileOrCreateIfNotExists
 );
+
+export const handle = isTesting ? handleForTest : handleForOther;
