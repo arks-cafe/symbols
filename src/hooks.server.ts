@@ -53,6 +53,8 @@ const attachProfileOrCreateIfNotExists: Handle = async ({ event, resolve }) => {
 	return await resolve(event);
 };
 
+console.log('endpoint', env.PUBLIC_LOGTO_ENDPOINT);
+
 export const handle = sequence(
 	LogtoAuthHandler(env.PUBLIC_LOGTO_APP_ID as string, env.PUBLIC_LOGTO_ENDPOINT as string, [
 		UserScope.Email,

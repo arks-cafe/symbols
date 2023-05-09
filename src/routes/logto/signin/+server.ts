@@ -10,7 +10,7 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 		if (isSvelteKitRedirect(err)) {
 			throw redirect(err.status, err.location);
 		}
-
+		console.error(err);
 		throw error(400, 'error performing signin with Logto');
 	}
 };
