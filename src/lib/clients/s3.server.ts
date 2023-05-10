@@ -11,47 +11,39 @@ const s3Client = new S3({
 	region: env.S3_REGION
 });
 
-export async function uploadFile(file: File, key: string, newFileName?: string): Promise<string> {
-	await s3Client
-		.send(
-			new PutObjectCommand({
-				Bucket: env.S3_BUCKET_NAME,
-				Key: key,
-				Body: Buffer.from(await file.arrayBuffer()), // I hate this so much lkjhsfgdalkj;hsgdf
-				ACL: 'public-read',
-				ContentDisposition: newFileName ? `filename="${newFileName}"` : undefined
-			})
-		)
-		.catch((e) => {
-			if (e instanceof Error) {
-				throw e;
-			}
-			throw new Error('Failed to upload file to S3.');
-		});
+export async function uploadFile(
+	file: FileList[0],
+	key: string,
+	newFileName?: string
+): Promise<string> {
+	const x = await s3Client.send(
+		new PutObjectCommand({
+			Bucket: env.S3_BUCKET_NAME,
+			Key: key,
+			Body: Buffer.from(await file.arrayBuffer()), // I hate this so much lkjhsfgdalkj;hsgdf
+			ACL: 'public-read',
+			ContentDisposition: newFileName ? `filename="${newFileName}"` : undefined
+		})
+	);
 
 	// If putObject is successful, return the public URL of the object.
 
+	console.log(x);
 	return `${env.S3_CDN_URL}/${key}`;
 }
 
 export async function deleteFiles(key: string[]): Promise<void> {
-	await s3Client
-		.send(
-			new DeleteObjectsCommand({
-				Bucket: env.S3_BUCKET_NAME,
-				Delete: {
-					Objects: key.map((e) => ({
-						Key: e
-					}))
-				}
-			})
-		)
-		.catch((e) => {
-			if (e instanceof Error) {
-				throw e;
+	const x = await s3Client.send(
+		new DeleteObjectsCommand({
+			Bucket: env.S3_BUCKET_NAME,
+			Delete: {
+				Objects: key.map((e) => ({
+					Key: e
+				}))
 			}
-			throw new Error('Failed to delete files from S3.');
-		});
+		})
+	);
+	console.log(x);
 }
 
 export default s3Client;

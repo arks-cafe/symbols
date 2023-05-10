@@ -15,9 +15,22 @@ export default defineConfig({
 		setupFiles: ['./setupTest.ts'],
 		// Exclude files in c8
 		coverage: {
-			exclude: ['./scripts/**/*']
+			all: true,
+			include: ['src/**/*.{js,ts,svelte}'],
+			exclude: [
+				...(configDefaults.coverage.exclude as string[]), // cast to string[] because typings suck for some reason
+				'src/**/*.stories.*',
+				'src/routes/**/+*',
+				'src/lib/types.ts',
+				'./scripts/**/*',
+				'**/fixtures.ts'
+			]
 		},
 		// Exclude playwright tests folder
-		exclude: [...configDefaults.exclude, 'tests']
+		exclude: [...configDefaults.exclude, 'tests'],
+		deps: {
+			// Add dependencies that are not automatically detected by vitest
+			inline: ['@aws-sdk/util-user-agent-node', '@aws-sdk/signature-v4-multi-region']
+		}
 	}
 });

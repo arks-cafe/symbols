@@ -5,24 +5,8 @@ import { env } from '$env/dynamic/public';
 import { env as privateEnv } from '$env/dynamic/private';
 import prisma from '$lib/clients/db.server';
 
-// const authenticationHandler: Handle = async ({ event, resolve }) => {
-// 	const authenticated = await event.locals.logto.isAuthenticated();
-
-// if (event.url.pathname.includes('/protected') && !authenticated) {
-// 	throw redirect(
-// 		303,
-// 		'/?error=This is a protected route, please login before accessing this page'
-// 	);
-// }
-
-// if (event.url.pathname === '/' && authenticated) {
-// 	throw redirect(301, '/protected');
-// }
-
-// 	return await resolve(event);
-// };
-
-console.log('load hooks');
+// ? Ignoring files untestable in unit tests
+/* c8 ignore start */
 
 const setLogtoAuthenticatedUser: Handle = async ({ event, resolve }) => {
 	try {
@@ -80,10 +64,16 @@ const handleForTest: Handle = sequence(
 	attachProfileOrCreateIfNotExists
 );
 
+/* c8 ignore stop */
+
 const isTesting = privateEnv.NODE_ENV === 'test';
+
+console.log(privateEnv);
 
 if (isTesting) {
 	console.log('Running in test mode!');
+} else {
+	console.log('Running in normal mode!');
 }
 
 const handleForOther = sequence(

@@ -1,7 +1,8 @@
 import { describe, it, expect } from 'vitest';
+import { getPostsCount } from '$lib/constants';
+import { UserError } from '$lib/errors';
 
-describe('sum test', () => {
-	it('adds 1 + 2 to equal 3', () => {
-		expect(1 + 2).toBe(3);
-	});
+test('miscellaneous exports', () => {
+	expect(getPostsCount).toBeDefined();
+	expect(UserError).toBeDefined();
 });
