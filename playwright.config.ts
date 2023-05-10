@@ -1,13 +1,11 @@
 import type { PlaywrightTestConfig } from '@playwright/test';
 
+// Load environment variables
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.testing' });
+
 const config: PlaywrightTestConfig = {
 	webServer: [
-		{
-			// Backend DB
-			command: 'docker compose --file tests/docker-compose.yml up',
-			port: 4174,
-			timeout: 120 * 1000
-		},
 		{
 			// App
 			command: 'pnpm build && pnpm preview',
@@ -17,9 +15,10 @@ const config: PlaywrightTestConfig = {
 	use: {
 		baseURL: 'http://localhost:4173'
 	},
-	globalTeardown: './tests/globalTeardown.ts',
+	globalSetup: './tests/setup/globalSetup.ts',
+	globalTeardown: './tests/setup/globalTeardown.ts',
 	testDir: 'tests',
-	testMatch: '**/e2e.ts'
+	testMatch: '**/*.@(spec|test|e2e).?(m)[jt]s?(x)'
 };
 
 export default config;

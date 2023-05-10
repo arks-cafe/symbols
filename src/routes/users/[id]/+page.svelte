@@ -3,7 +3,7 @@
 
 	export let data: PageData;
 
-	import SymbolArtDisplay from '$lib/components/gallery/SymbolArtDisplay';
+	import SymbolArtDisplay from '$lib/components/gallery/SymbolArtDisplay.svelte';
 
 	// Set initial posts from page load.
 	let posts = data.posts;
