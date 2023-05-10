@@ -4,8 +4,8 @@
 
 	// Check if the current user (from PageData) owns the post
 	import { page } from '$app/stores';
-	let isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
-	$: isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
+	let isOwnedByCurrentUser = $page.data?.profile?.userId === post.authorId;
+	$: isOwnedByCurrentUser = $page.data?.profile?.userId === post.authorId;
 
 	const postUrl: string = `/posts/${post.id}`;
 	const userUrl: string = `/users/${post.authorId}`;
