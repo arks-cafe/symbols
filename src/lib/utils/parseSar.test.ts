@@ -21,4 +21,13 @@ describe('parseSar', () => {
 		const parsed = await parseSar(sarAsFile as any satisfies File);
 		expect(parsed).toEqual(example);
 	});
+	it('should throw an error if the sar file is invalid', async () => {
+		const fixturePath = path.join(__dirname, '..', '..', '..', 'tests', 'fixtures', 'invalid.sar');
+		const sar = fs.readFileSync(fixturePath);
+		const sarAsFile = {
+			arrayBuffer: async () => sar
+		};
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await expect(parseSar(sarAsFile as any satisfies File)).rejects.toThrow();
+	});
 });

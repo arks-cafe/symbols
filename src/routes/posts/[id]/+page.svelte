@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import SymbolArtDisplay from '$lib/components/gallery/SymbolArtDisplay.svelte';
+	import SymbolArtDisplay from '$lib/components/gallery/SymbolArtDisplay';
 	import type { PageData } from './$types';
 
 	export let data: PageData;

@@ -3,7 +3,7 @@ import type SymbolArt from 'symbol-art-parser';
 type SymbolArtInterface = InstanceType<typeof SymbolArt>['json'];
 
 /** Turn RGB value into Hexadecimal format for `Mesh.tint` value */
-function convertRGBtoHex(red: number, green: number, blue: number) {
+export function convertRGBtoHex(red: number, green: number, blue: number) {
 	function colorToHex(color: number) {
 		const hexadecimal = color.toString(16);
 		return hexadecimal.length === 1 ? '0' + hexadecimal : hexadecimal;
@@ -23,8 +23,6 @@ export default async function renderSar(
 	route: string = '',
 	resolution: number = 4
 ) {
-	const spritesheet = await PIXI.Assets.load(route + 'spritesheet.json');
-
 	/** Top level container for rendering Symbol Art */
 	const app = new PIXI.Application({
 		width: 190 * resolution,
@@ -36,55 +34,65 @@ export default async function renderSar(
 		clearBeforeRender: true
 	});
 
-	/** Rendering container for Symbol Art nested within `app` */
-	const container = new PIXI.Container();
-	app.stage.addChild(container);
+	// Ignore the rest of this file if we're in a test environment.
+	/* c8 ignore start */
 
-	// Add offsets to recenter symbol when calculating corners (eyeball estimate).
-	const offsetX = -31.5 * resolution;
-	const offsetY = -79.25 * resolution;
+	try {
+		const spritesheet = await PIXI.Assets.load(route + 'spritesheet.json');
 
-	// Reverse layers to render from back to front.
-	const layers = sar.layers.reverse();
+		/** Rendering container for Symbol Art nested within `app` */
+		const container = new PIXI.Container();
+		app.stage.addChild(container);
 
-	for (let i = 0; i < layers.length; i++) {
-		const layer = layers[i];
-		const layerPath = `${layer.symbol + 1}.png`;
-		const corners = [
-			{
-				x: layer.position.topLeft.x * resolution + offsetX,
-				y: layer.position.topLeft.y * resolution + offsetY
-			},
-			{
-				x: layer.position.topRight.x * resolution + offsetX,
-				y: layer.position.topRight.y * resolution + offsetY
-			},
-			{
-				x: layer.position.bottomLeft.x * resolution + offsetX,
-				y: layer.position.bottomLeft.y * resolution + offsetY
-			},
-			{
-				x: layer.position.bottomRight.x * resolution + offsetX,
-				y: layer.position.bottomRight.y * resolution + offsetY
-			}
-		];
-		const { r, g, b, a, isVisible } = layer;
+		// Add offsets to recenter symbol when calculating corners (eyeball estimate).
+		const offsetX = -31.5 * resolution;
+		const offsetY = -79.25 * resolution;
 
-		let trueAlpha = a / 7;
-		if (!isVisible) trueAlpha = 0;
+		// Reverse layers to render from back to front.
+		const layers = sar.layers.reverse();
 
-		const trueR = r * 4;
-		const trueG = g * 4;
-		const trueB = b * 4;
+		for (let i = 0; i < layers.length; i++) {
+			const layer = layers[i];
+			const layerPath = `${layer.symbol + 1}.png`;
+			const corners = [
+				{
+					x: layer.position.topLeft.x * resolution + offsetX,
+					y: layer.position.topLeft.y * resolution + offsetY
+				},
+				{
+					x: layer.position.topRight.x * resolution + offsetX,
+					y: layer.position.topRight.y * resolution + offsetY
+				},
+				{
+					x: layer.position.bottomLeft.x * resolution + offsetX,
+					y: layer.position.bottomLeft.y * resolution + offsetY
+				},
+				{
+					x: layer.position.bottomRight.x * resolution + offsetX,
+					y: layer.position.bottomRight.y * resolution + offsetY
+				}
+			];
+			const { r, g, b, a, isVisible } = layer;
 
-		const hex = convertRGBtoHex(trueR, trueG, trueB);
+			let trueAlpha = a / 7;
+			if (!isVisible) trueAlpha = 0;
 
-		const sprite = new PIXI.SimplePlane(spritesheet.textures[layerPath], 2, 2);
-		sprite.tint = hex;
-		sprite.alpha = trueAlpha;
-		const buffer = sprite.geometry.getBuffer('aVertexPosition');
-		buffer.data = corners.map((e) => [e.x, e.y]).flat() as unknown as PIXI.ITypedArray;
-		container.addChild(sprite);
+			const trueR = r * 4;
+			const trueG = g * 4;
+			const trueB = b * 4;
+
+			const hex = convertRGBtoHex(trueR, trueG, trueB);
+
+			const sprite = new PIXI.SimplePlane(spritesheet.textures[layerPath], 2, 2);
+			sprite.tint = hex;
+			sprite.alpha = trueAlpha;
+			const buffer = sprite.geometry.getBuffer('aVertexPosition');
+			buffer.data = corners.map((e) => [e.x, e.y]).flat() as unknown as PIXI.ITypedArray;
+			container.addChild(sprite);
+		}
+	} catch (e) {
+		console.error(e);
+		throw e;
 	}
 
 	// Wait for render to finish, then return the result.
