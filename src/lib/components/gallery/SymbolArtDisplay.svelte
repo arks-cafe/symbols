@@ -7,8 +7,6 @@
 	let isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
 	$: isOwnedByCurrentUser = $page.data.profile?.userId === post.authorId;
 
-	console.log($page.data);
-
 	const postUrl: string = `/posts/${post.id}`;
 	const userUrl: string = `/users/${post.authorId}`;
 
