@@ -56,7 +56,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Setup pnpm
         uses: pnpm/action-setup@v2.2.4
-      - name: Setup node cache
+      - name: Setup node
         uses: actions/setup-node@v3
         with:
           node-version: 18
