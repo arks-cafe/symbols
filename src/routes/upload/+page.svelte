@@ -112,7 +112,7 @@
 	{#if data.profile?.name}
 		<form
 			on:submit|preventDefault={handleSubmit}
-			class="mx-auto rounded-xl bg-base-100 border p-8 shadow-lg flex flex-col gap-4"
+			class="mx-auto flex flex-col gap-4 rounded-xl border bg-base-100 p-8 shadow-lg"
 		>
 			<div>
 				<label class="btn w-full">
@@ -127,15 +127,15 @@
 					/>
 				</label>
 				{#if file}
-					<h3 class="text-center font-thing text-sm">{file.name}</h3>
+					<h3 class="font-thing text-center text-sm">{file.name}</h3>
 				{/if}
 			</div>
 
 			{#if previewSrc && file}
 				<div>
-					<h2 class="text-center font-bold text-lg">Preview</h2>
+					<h2 class="text-center text-lg font-bold">Preview</h2>
 				</div>
-				<img src={previewSrc} alt="preview" class="w-full rounded-lg mx-auto" />
+				<img src={previewSrc} alt="preview" class="mx-auto w-full rounded-lg" />
 			{:else if loading}
 				<p class="text-center">Loading...</p>
 			{/if}
@@ -155,7 +155,7 @@
 				</div>
 
 				<div>
-					<button type="submit" class="btn btn-block" disabled={!readyToSubmit || submitting}
+					<button type="submit" class="btn-block btn" disabled={!readyToSubmit || submitting}
 						>submit</button
 					>
 				</div>

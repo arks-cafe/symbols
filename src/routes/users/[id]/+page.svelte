@@ -33,15 +33,15 @@
 	}
 </script>
 
-<div class="max-w-5xl mx-auto mb-8">
-	<h1 class="font-black text-4xl">Posts from @{profile.name}</h1>
+<div class="mx-auto mb-8 max-w-5xl">
+	<h1 class="text-4xl font-black">Posts from @{profile.name}</h1>
 </div>
 
-<div class="mx-auto max-w-5xl mb-16">
-	<div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+<div class="mx-auto mb-16 max-w-5xl">
+	<div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
 		{#each posts as post}
 			<SymbolArtDisplay on:delete={handleDelete} {post} />
 		{/each}
 	</div>
-	<button on:click={showMore} disabled={loading} class="btn btn-block btn-sm">Load More</button>
+	<button on:click={showMore} disabled={loading} class="btn-block btn-sm btn">Load More</button>
 </div>

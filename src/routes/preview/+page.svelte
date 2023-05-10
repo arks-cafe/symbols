@@ -31,7 +31,7 @@
 	}
 </script>
 
-<div class="max-w-5xl mx-auto py-8">
+<div class="mx-auto max-w-5xl py-8">
 	<header class="mb-8">
 		<h1 class="text-4xl font-black"><code>.sar</code> File Previewer</h1>
 		<a href="/" class="btn">Back Home</a>

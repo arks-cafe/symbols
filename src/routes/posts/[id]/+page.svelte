@@ -11,6 +11,6 @@
 	}
 </script>
 
-<div class="max-w-xl mx-auto my-8">
+<div class="mx-auto my-8 max-w-xl">
 	<SymbolArtDisplay on:delete={handleDelete} {post} />
 </div>
