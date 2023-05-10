@@ -66,8 +66,7 @@
 		<h4 class="text-sm italic">posted on {formattedDate}</h4>
 	</div>
 	<div class="pt-2 flex gap-2">
-		<a href={post.fileUrl} aria-label="download" class="btn btn-secondary btn-sm flex-1">Download</a
-		>
+		<a href={post.fileUrl} class="btn btn-secondary btn-sm flex-1">Download</a>
 		{#if isOwnedByCurrentUser}
 			<button on:click={() => deletePost()} class="btn btn-error btn-sm hover:brightness-95"
 				>Delete</button

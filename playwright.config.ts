@@ -18,7 +18,8 @@ const config: PlaywrightTestConfig = {
 		baseURL: 'http://localhost:4173'
 	},
 	globalTeardown: './tests/globalTeardown.ts',
-	testDir: 'tests'
+	testDir: 'tests',
+	testMatch: '**/e2e.ts'
 };
 
 export default config;
