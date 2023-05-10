@@ -18,7 +18,8 @@ const config: PlaywrightTestConfig = {
 	globalSetup: './tests/setup/globalSetup.ts',
 	globalTeardown: './tests/setup/globalTeardown.ts',
 	testDir: 'tests',
-	testMatch: '**/*.@(spec|test|e2e).?(m)[jt]s?(x)'
+	testMatch: '**/*.@(spec|test|e2e).?(m)[jt]s?(x)',
+	reporter: [['html', { open: 'never' }]]
 };
 
 export default config;
