@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import SymbolArtDisplay from './SymbolArtDisplay.svelte';
-import { describe, it, expect } from 'vitest';
 import { posts } from './SymbolArtDisplay.fixtures';
+import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/svelte';
 
 describe('SymbolArtDisplay', () => {

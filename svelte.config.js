@@ -16,7 +16,7 @@ const config = {
 		csrf: { checkOrigin: process.env.NODE_ENV === 'development' ? false : true },
 		alias: {
 			'$routes/*': './src/routes/*',
-			'$fixtures/*': './src/stories/fixtures/*'
+			'$fixtures/*': './tests/fixtures/*'
 		}
 	}
 };

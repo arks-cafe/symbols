@@ -1,4 +1,4 @@
-import exampleSymbolArtSrc from '../../../stories/fixtures/example-symbol-art.png';
+import exampleSymbolArtSrc from '$fixtures/example.png';
 
 import type SymbolArtDisplay from './SymbolArtDisplay.svelte';
 import type { ComponentProps } from 'svelte';
