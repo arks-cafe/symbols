@@ -24,7 +24,7 @@ jobs:
         # https://github.com/microsoft/playwright/issues/7249#issuecomment-1154603556
       - name: Check Playwright Version
         id: playwright-check
-        run: echo "VERSION=$(pnpm list -r --depth=-1 | grep playwright)" >> $GITHUB_OUTPUT
+        run: echo "VERSION=$(pnpm list -r --depth=-1 |  grep playwright | sha256sum)" >> $GITHUB_OUTPUT
 
       - name: Cache Playwright
         id: playwright-cache
@@ -43,7 +43,7 @@ jobs:
         run: pnpm run test:e2e
 
       - uses: actions/upload-artifact@v3
-        if: always()
+        if: ${{ !env.ACT }}
         with:
           name: playwright-report
           path: playwright-report/
