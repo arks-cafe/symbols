@@ -5,6 +5,7 @@
 	"packageManager": "pnpm@8.4.0",
 	"scripts": {
 		"dev": "vite dev",
+		"dev:test": "dotenv -e .env.testing -- vite dev",
 		"build": "vite build",
 		"build:node": "ADAPTER=NODE vite build",
 		"preview": "vite preview",
@@ -15,6 +16,8 @@
 		"test": "pnpm test:unit && pnpm test:e2e",
 		"test:unit": "vitest run",
 		"test:e2e": "playwright test",
+		"container:start": "ts-node scripts/startContainers.ts",
+		"container:stop": "ts-node scripts/stopContainers.ts",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
 		"postinstall": "prisma generate"
@@ -48,6 +51,7 @@
 		"chalk": "^5.2.0",
 		"daisyui": "^2.51.6",
 		"dotenv": "^16.0.3",
+		"dotenv-cli": "^7.2.1",
 		"eslint": "^8.40.0",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-plugin-storybook": "^0.6.12",

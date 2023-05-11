@@ -16,6 +16,8 @@ export async function uploadFile(
 	key: string,
 	newFileName?: string
 ): Promise<string> {
+	console.log('sending file to s3');
+
 	const x = await s3Client.send(
 		new PutObjectCommand({
 			Bucket: env.S3_BUCKET_NAME,
