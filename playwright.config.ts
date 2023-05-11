@@ -20,7 +20,7 @@ const config: PlaywrightTestConfig = {
 	testDir: 'tests',
 	testMatch: '**/*.@(spec|test|e2e).?(m)[jt]s?(x)',
 	reporter: process.env.CI
-		? [['json', { outputFile: 'coverage/playwright-results.json' }], ['github']]
+		? [['junit', { outputFile: 'coverage/playwright-results.xml' }], ['github']]
 		: 'list'
 };
 
