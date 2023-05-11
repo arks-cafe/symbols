@@ -68,8 +68,6 @@ const handleForTest: Handle = sequence(
 
 const isTesting = privateEnv.NODE_ENV === 'test';
 
-console.log(privateEnv);
-
 if (isTesting) {
 	console.log('Running in test mode!');
 } else {
