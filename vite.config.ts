@@ -21,8 +21,8 @@ export default defineConfig({
 			exclude: [
 				...(configDefaults.coverage.exclude as string[]), // cast to string[] because typings suck for some reason
 				'src/**/*.stories.*',
-				'src/routes/**/+*',
-				'src/lib/types.ts',
+				// 'src/routes/**/+*',
+				// 'src/lib/types.ts',
 				'./scripts/**/*',
 				'**/fixtures.ts'
 			],
