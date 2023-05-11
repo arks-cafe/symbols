@@ -15,7 +15,7 @@ export default defineConfig({
 		setupFiles: ['./setupTest.ts'],
 		// Exclude files in c8
 		coverage: {
-			enabled: true,
+			enabled: process.env.CI ? true : false,
 			all: true,
 			include: ['src/**/*.{js,ts,svelte}'],
 			exclude: [
@@ -26,7 +26,6 @@ export default defineConfig({
 				'./scripts/**/*',
 				'**/fixtures.ts'
 			],
-			reporter: 'json',
 			reportsDirectory: './coverage'
 		},
 		// Exclude playwright tests folder
