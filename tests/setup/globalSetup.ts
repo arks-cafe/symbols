@@ -5,6 +5,7 @@ const setup = async () => {
 	// Check if docker compose is available, if not, throw an error
 	try {
 		const dockerComposeVersion = execSync('docker compose version').toString();
+		if(!dockerComposeVersion) throw new Error();
 		console.log(chalk.cyan('Using docker compose version:', dockerComposeVersion));
 		console.log(chalk.cyan.italic('Starting Containers...'));
 		execSync('docker compose --file tests/docker-compose.yml up -d', { stdio: 'ignore' });
