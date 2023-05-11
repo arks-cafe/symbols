@@ -5,7 +5,7 @@
 	"packageManager": "pnpm@8.4.0",
 	"scripts": {
 		"dev": "vite dev",
-		"dev:test": "dotenv -e .env.testing -- vite dev",
+		"dev:test": "dotenv -e .env.testing -- vite dev --mode testing",
 		"build": "vite build",
 		"build:node": "ADAPTER=NODE vite build",
 		"preview": "vite preview",
@@ -16,8 +16,8 @@
 		"test": "pnpm test:unit && pnpm test:e2e",
 		"test:unit": "vitest run",
 		"test:e2e": "playwright test",
-		"container:start": "ts-node scripts/startContainers.ts",
-		"container:stop": "ts-node scripts/stopContainers.ts",
+		"container:start": "dotenv -e .env.testing -- node scripts/startContainers.js",
+		"container:stop": "dotenv -e .env.testing -- node scripts/stopContainers.js",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
 		"postinstall": "prisma generate"
@@ -71,7 +71,6 @@
 		"svelte-fragment-component": "^1.2.0",
 		"svelte-htm": "^1.2.0",
 		"tailwindcss": "^3.3.2",
-		"ts-node": "^10.9.1",
 		"tslib": "^2.5.0",
 		"typescript": "^5.0.4",
 		"vercel": "^29.1.1",

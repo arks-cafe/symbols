@@ -8,7 +8,11 @@ const s3Client = new S3({
 		accessKeyId: env.S3_ACCESS_KEY,
 		secretAccessKey: env.S3_SECRET_KEY
 	},
-	region: env.S3_REGION
+	region: env.S3_REGION,
+	// Resolve to correct endpoint in test environment
+	forcePathStyle: env.NODE_ENV === 'test'
+	// endpointProvider:
+	// 	env.NODE_ENV === 'test' ? () => ({ url: new URL(env.S3_ENDPOINT_URL) }) : undefined
 });
 
 export async function uploadFile(
