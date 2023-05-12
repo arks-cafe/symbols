@@ -1,6 +1,11 @@
 import { execSync } from 'child_process';
 import chalk from 'chalk';
-import { BucketAlreadyExists, BucketAlreadyOwnedByYou, S3 } from '@aws-sdk/client-s3';
+import {
+	BucketAlreadyExists,
+	BucketAlreadyOwnedByYou,
+	PutBucketPolicyCommand,
+	S3
+} from '@aws-sdk/client-s3';
 
 const setup = async () => {
 	try {
@@ -31,29 +36,6 @@ const setup = async () => {
 			stdio: 'inherit'
 		});
 		console.log(chalk.green('Database Initialized\n'));
-
-		// Initialize test bucket in minio
-		console.log(chalk.cyan.italic('Initializing Minio...'));
-		const minioClient = new S3({
-			endpoint: process.env.S3_ENDPOINT_URL,
-			region: process.env.S3_REGION,
-			forcePathStyle: true,
-			credentials: {
-				accessKeyId: process.env.S3_ACCESS_KEY ?? '',
-				secretAccessKey: process.env.S3_SECRET_KEY ?? ''
-			}
-		});
-		try {
-			await minioClient.createBucket({ Bucket: process.env.S3_BUCKET_NAME });
-		} catch (error) {
-			if (error instanceof BucketAlreadyOwnedByYou || error instanceof BucketAlreadyExists) {
-				console.log(chalk.yellow('Bucket already exists!'));
-			} else {
-				throw error;
-			}
-		}
-
-		console.log(chalk.green('Minio Initialized\n'));
 	} catch (error) {
 		console.error(error);
 		console.log(chalk.red('Something went wrong when initializing test containers!'));

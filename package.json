@@ -5,7 +5,7 @@
 	"packageManager": "pnpm@8.4.0",
 	"scripts": {
 		"dev": "vite dev",
-		"dev:test": "dotenv -e .env.testing -- vite dev --mode testing",
+		"dev:test": "node scripts/checkContainersWithError.js && dotenv -e .env.testing -- vite dev --mode testing",
 		"build": "vite build",
 		"build:node": "ADAPTER=NODE vite build",
 		"preview": "vite preview",
@@ -16,8 +16,9 @@
 		"test": "pnpm test:unit && pnpm test:e2e",
 		"test:unit": "vitest run",
 		"test:e2e": "playwright test",
-		"container:start": "dotenv -e .env.testing -- node scripts/startContainers.js",
-		"container:stop": "dotenv -e .env.testing -- node scripts/stopContainers.js",
+		"docker:up": "dotenv -e .env.testing -- node scripts/startContainers.js",
+		"docker:down": "dotenv -e .env.testing -- node scripts/stopContainers.js",
+		"docker:check": "dotenv -e .env.testing -- node scripts/checkContainers.js",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build",
 		"postinstall": "prisma generate"

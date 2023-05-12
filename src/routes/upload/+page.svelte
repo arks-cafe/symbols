@@ -115,7 +115,7 @@
 			class="mx-auto flex flex-col gap-4 rounded-xl border bg-base-100 p-8 shadow-lg"
 		>
 			<div>
-				<label class="btn w-full">
+				<label aria-label="button" class="btn w-full">
 					Select File
 					<input
 						type="file"

@@ -34,7 +34,6 @@ export async function uploadFile(
 
 	// If putObject is successful, return the public URL of the object.
 
-	console.log(x);
 	return `${env.S3_CDN_URL}/${key}`;
 }
 
@@ -49,7 +48,6 @@ export async function deleteFiles(key: string[]): Promise<void> {
 			}
 		})
 	);
-	console.log(x);
 }
 
 export default s3Client;
