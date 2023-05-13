@@ -42,12 +42,20 @@ jobs:
       - name: Run e2e tests
         run: pnpm run test:e2e
 
-      - uses: actions/upload-artifact@v3
-        if: ${{ !env.ACT }}
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2.7.0
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml
 
   unit:
     runs-on: ubuntu-latest
@@ -69,6 +77,14 @@ jobs:
       # Upload coverage to codecov
       - name: Upload coverage to codecov
         uses: codecov/codecov-action@v3
+        if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           flags: e2e
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2.7.0
+        if: always()
+        with:
+          files: |
+            test-results/**/*.xml

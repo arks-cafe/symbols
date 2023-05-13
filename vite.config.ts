@@ -33,6 +33,8 @@ export default defineConfig({
 		deps: {
 			// Add dependencies that are not automatically detected by vitest
 			inline: ['@aws-sdk/util-user-agent-node', '@aws-sdk/signature-v4-multi-region']
-		}
+		},
+		reporters: process.env.CI ? ['default', 'junit'] : ['default'],
+		outputFile: 'test-results/junit-unit.xml'
 	}
 });

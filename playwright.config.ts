@@ -19,7 +19,14 @@ const config: PlaywrightTestConfig = {
 	globalTeardown: './tests/setup/globalTeardown.js',
 	testDir: 'tests',
 	testMatch: '**/*.@(spec|test|e2e).?(m)[jt]s?(x)',
-	reporter: process.env.CI ? [['html', { open: 'never' }], ['github'], ['dot']] : 'list'
+	reporter: process.env.CI
+		? [
+				['html', { open: 'never' }],
+				['github'],
+				['dot'],
+				['junit', { outputFile: 'test-results/junit-e2e.xml' }]
+		  ]
+		: 'list'
 };
 
 export default config;

@@ -13,3 +13,4 @@ vite.config.ts.timestamp-*
 .temp
 coverage
 playwright-report
+test-results
