@@ -33,10 +33,10 @@
 	}
 </script>
 
-<li class="rounded-box flex flex-col justify-between p-3 shadow-lg">
+<li class="rounded-box flex flex-col justify-between bg-base-100 p-3 shadow-lg">
 	<a href={postUrl}
 		><img
-			class="rounded-box aspect-[2/1] w-full transition-all hover:scale-[101%] hover:shadow-md"
+			class="rounded-box aspect-[2/1] w-full bg-base-100 transition-all hover:scale-[101%] hover:shadow-md"
 			src={post.thumbnailUrl}
 			alt={post.title}
 		/></a

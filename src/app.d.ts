@@ -9,7 +9,10 @@ declare global {
 			user: import('@cntr/sveltekit').UserInfoResponse | null;
 			profile: import('@prisma/client').Profile | null;
 		}
-		// interface PageData {}
+		interface PageData {
+			user: import('@cntr/sveltekit').UserInfoResponse | null;
+			profile: import('@prisma/client').Profile | null;
+		}
 		// interface Platform {}
 	}
 }
