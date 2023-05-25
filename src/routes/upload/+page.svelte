@@ -94,19 +94,6 @@
 <main class="mx-auto max-w-5xl">
 	<div class="mb-8">
 		<h1 class="text-4xl font-black">Upload</h1>
-		<div class="flex justify-between">
-			<a class="btn" href="/">Home</a>
-			{#if data.user}
-				<a href="/logto/signout" class="btn">sign out</a>
-			{:else}
-				<a href="/logto/signin" class="btn">sign in</a>
-			{/if}
-		</div>
-		{#if data.profile?.name}
-			<h3>Welcome, {data.profile.name}</h3>
-		{:else}
-			<h3>Welcome, Guest</h3>
-		{/if}
 	</div>
 
 	{#if data.profile?.name}
