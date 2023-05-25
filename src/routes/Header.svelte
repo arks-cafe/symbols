@@ -13,15 +13,23 @@
 				<!-- svelte-ignore a11y-label-has-associated-control -->
 				<label
 					aria-label="button"
-					title="Theme Settings"
+					title="Settings"
 					tabindex="0"
 					class="btn-ghost btn-square btn text-primary-content"
 				>
-					<i class="fa-solid fa-lightbulb text-lg" />
+					<i class="fa-solid fa-gear text-lg" />
 				</label>
 				<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
-				<div tabindex="0" class="dropdown-content rounded-box mt-2 w-52 bg-base-100 p-4 shadow-lg">
-					<SettingsForm />
+				<div tabindex="0" class="dropdown-content rounded-box mt-2 w-56 bg-base-100 shadow-lg">
+					<div class="p-4">
+						<SettingsForm />
+					</div>
+					<hr class="mx-4 my-1" />
+					<ul class="menu rounded-box p-2">
+						<li>
+							<a href="/preview"><code>.sar</code> Preview Tool</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -37,6 +45,9 @@
 		</div>
 
 		<div class="navbar-end">
+			<a title="Upload" href="/upload" class="btn-ghost btn-square btn text-primary-content">
+				<i class="fa-solid fa-plus text-lg" />
+			</a>
 			{#if profile?.userId}
 				<div class="dropdown-bottom dropdown dropdown-end">
 					<!-- svelte-ignore a11y-no-noninteractive-tabindex -->

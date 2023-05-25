@@ -20,17 +20,12 @@
 	];
 </script>
 
+<h3 class="mb-2 font-semibold">Theme</h3>
 {#each themeOptions as option}
-	<div class="form-control">
-		<label class="label cursor-pointer">
-			<span class="label-text">{option.label}</span>
-			<input
-				type="radio"
-				name="radio-theme"
-				class="radio"
-				bind:group={$theme}
-				value={option.value}
-			/>
-		</label>
-	</div>
+	<label
+		class="btn-ghost btn-block btn flex flex-nowrap justify-between text-start font-normal normal-case"
+	>
+		<span class="text-sm">{option.label}</span>
+		<input type="radio" name="radio-theme" class="radio" bind:group={$theme} value={option.value} />
+	</label>
 {/each}
