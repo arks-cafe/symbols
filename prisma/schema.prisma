@@ -22,10 +22,10 @@ model Profile {
 }
 
 model Post {
-  id            String   @id @unique
-  cursor        Int      @unique @default(autoincrement())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id            String        @id @unique
+  cursor        Int           @unique @default(autoincrement())
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
   title         String
   fileUrl       String
   fileKey       String
@@ -35,6 +35,24 @@ model Post {
   rawTitle      String
   rawSoundId    Int
   rawAuthorId   Int
-  author        Profile  @relation(fields: [authorId], references: [userId])
+  author        Profile       @relation(fields: [authorId], references: [userId])
   authorId      String
+  tags          TagsOnPosts[]
+}
+
+model Tag {
+  name      String        @id @unique
+  cursor    Int           @unique @default(autoincrement())
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  posts     TagsOnPosts[]
+}
+
+model TagsOnPosts {
+  post    Post   @relation(fields: [postId], references: [id])
+  postId  String
+  tag     Tag    @relation(fields: [tagName], references: [name])
+  tagName String
+
+  @@id([postId, tagName])
 }
