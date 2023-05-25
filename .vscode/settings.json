@@ -2,6 +2,6 @@
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"explorer.fileNesting.patterns": {
 		"*.ts": "${basename}.test.ts",
-		"*.svelte": "${basename}.test.ts,${basename}.stories.*"
+		"*.svelte": "${basename}.test.ts,${basename}.server.test.ts,${basename}.stories.*"
 	}
 }
