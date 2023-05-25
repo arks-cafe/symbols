@@ -13,14 +13,14 @@
 		title: 'Symbol Bucket',
 		description: 'Upload and share your Symbol Arts from PSO2!',
 		url: 'https://symbol.arks.cafe',
-		images: [{ url: 'https://symbols.arks.moe/og-image.png' }]
+		images: [{ url: 'https://symbols.arks.cafe/og-image.png' }]
 	}}
 	twitter={{
 		card: 'summary',
 		site: '@arks_cafe',
 		title: 'Symbol Bucket',
 		description: 'Upload and share your Symbol Arts from PSO2!',
-		image: 'https://symbols.arks.moe/og-image.png'
+		image: 'https://symbols.arks.cafe/og-image.png'
 	}}
 />
 
