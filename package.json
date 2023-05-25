@@ -2,7 +2,7 @@
 	"name": "symbols",
 	"version": "0.0.1",
 	"private": true,
-	"packageManager": "pnpm@8.4.0",
+	"packageManager": "pnpm@8.5.1",
 	"scripts": {
 		"dev": "vite dev",
 		"dev:test": "node scripts/checkContainersWithError.js && dotenv -e .env.testing -- vite dev --mode testing",
