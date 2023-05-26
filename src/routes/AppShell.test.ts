@@ -52,9 +52,15 @@ describe('AppShell', () => {
 		pageData = { data: pageDataWithoutUser };
 
 		render(html`<${AppShell}>this that content baybee</${AppShell}>`);
-		expect(screen.getByRole('heading')).toHaveTextContent('Symbol Bucket');
+
+		// Title bar has correct text and link.
+		expect(screen.getByTitle('Home')).toHaveTextContent('Symbol Bucket');
 		expect(screen.getByTitle('Home')).toHaveAttribute('href', '/');
+
+		// Content in slot is rendered.
 		expect(screen.getByText('this that content baybee')).toBeInTheDocument();
+
+		// Account drawer.
 		await fireEvent.click(screen.getByTitle('Account'));
 		expect(screen.getByText('Sign In')).toHaveAttribute('href', '/logto/signin'); // DaisyUI drawer keeps this in the DOM even when closed.
 	});
@@ -75,7 +81,7 @@ describe('AppShell', () => {
 
 		render(html`<${AppShell}>this that content baybee</${AppShell}>`);
 
-		await fireEvent.click(screen.getByTitle('Theme Settings'));
+		await fireEvent.click(screen.getByTitle('Settings'));
 		expect(document.documentElement.dataset.theme).toBeUndefined();
 		await fireEvent.click(screen.getByText('Light'));
 		expect(document.documentElement.dataset.theme).toBe('light');
