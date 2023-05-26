@@ -14,6 +14,7 @@
 	let title: string = '';
 	let loading = false;
 	let previewSrc: string | undefined;
+	let titleInput: HTMLInputElement;
 
 	$: if (files && typeof files[0] !== 'undefined' && files[0] instanceof File) {
 		(async () => {
@@ -32,6 +33,7 @@
 				}
 			} finally {
 				loading = false;
+				if (titleInput) titleInput.focus();
 			}
 		})();
 	}
@@ -119,6 +121,7 @@
 				<input
 					type="text"
 					bind:value={title}
+					bind:this={titleInput}
 					class="input-bordered input w-full"
 					required
 					disabled={submitting}

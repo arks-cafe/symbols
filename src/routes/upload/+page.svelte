@@ -11,7 +11,7 @@
 </div>
 
 {#if data.profile?.userId}
-	<div class="mx-auto mb-16 max-w-5xl rounded-xl bg-base-100 p-8 shadow-lg">
+	<div class="mx-auto mb-16 max-w-xl rounded-xl bg-base-100 p-8 shadow-lg">
 		<UploadForm />
 	</div>
 {:else}
