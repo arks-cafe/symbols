@@ -1,11 +1,5 @@
 import { execSync } from 'child_process';
 import chalk from 'chalk';
-import {
-	BucketAlreadyExists,
-	BucketAlreadyOwnedByYou,
-	PutBucketPolicyCommand,
-	S3
-} from '@aws-sdk/client-s3';
 
 const setup = async () => {
 	try {
